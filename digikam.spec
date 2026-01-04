@@ -5,20 +5,11 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 2
+%define pkg_rel 3
 
 %define tde_pkg digikam
 %define tde_prefix /opt/trinity
-%define tde_bindir %{tde_prefix}/bin
-%define tde_datadir %{tde_prefix}/share
-%define tde_docdir %{tde_datadir}/doc
-%define tde_includedir %{tde_prefix}/include
-%define tde_libdir %{tde_prefix}/%{_lib}
-%define tde_mandir %{tde_datadir}/man
-%define tde_tdeappdir %{tde_datadir}/applications/tde
-%define tde_tdedocdir %{tde_docdir}/tde
-%define tde_tdeincludedir %{tde_includedir}/tde
-%define tde_tdelibdir %{tde_libdir}/trinity
+
 
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
@@ -40,25 +31,19 @@ URL:			http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-#Vendor:		Trinity Desktop
-#Packager:	Francois Andriot <francois.andriot@free.fr>
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/applications/graphics/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 Source1:		digikam-open_in_digikam.desktop
 
 BuildSystem:    cmake
+
 BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
-BuildOption:    -DCMAKE_SKIP_RPATH=OFF
-BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
-BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_RPATH="%{tde_libdir}"
-BuildOption:    -DCMAKE_NO_BUILTIN_CHRPATH=ON
-BuildOption:    -DBIN_INSTALL_DIR=%{tde_bindir}
-BuildOption:    -DCONFIG_INSTALL_DIR="%{tde_confdir}"
-BuildOption:    -DINCLUDE_INSTALL_DIR=%{tde_tdeincludedir}
-BuildOption:    -DLIB_INSTALL_DIR=%{tde_libdir}
-BuildOption:    -DSHARE_INSTALL_PREFIX=%{tde_datadir}
+BuildOption:    -DCMAKE_INSTALL_PREFIX=%{tde_prefix}
+BuildOption:    -DCONFIG_INSTALL_DIR=%{_sysconfdir}/trinity
+BuildOption:    -DINCLUDE_INSTALL_DIR=%{tde_prefix}/include/tde
+BuildOption:    -DSHARE_INSTALL_PREFIX=%{tde_prefix}/share
 BuildOption:    -DWITH_ALL_OPTIONS=ON -DBUILD_ALL=ON
+BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
 BuildRequires:	trinity-tdebase-devel >= %{tde_version}
@@ -125,122 +110,122 @@ digiKam is based in part on the work of the Independent JPEG Group.
 %files -f %{tde_pkg}.lang
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING
-%{tde_bindir}/digikam
-%{tde_bindir}/digikamthemedesigner
-%{tde_bindir}/digitaglinktree
-%{tde_bindir}/showfoto
-%{tde_libdir}/libdigikam.so.0
-%{tde_libdir}/libdigikam.so.0.0.0
-%{tde_tdelibdir}/tdeio_digikamalbums.la
-%{tde_tdelibdir}/tdeio_digikamalbums.so
-%{tde_tdelibdir}/tdeio_digikamdates.la
-%{tde_tdelibdir}/tdeio_digikamdates.so
-%{tde_tdelibdir}/digikamimageplugin_adjustcurves.la
-%{tde_tdelibdir}/digikamimageplugin_adjustcurves.so
-%{tde_tdelibdir}/digikamimageplugin_adjustlevels.la
-%{tde_tdelibdir}/digikamimageplugin_adjustlevels.so
-%{tde_tdelibdir}/digikamimageplugin_antivignetting.la
-%{tde_tdelibdir}/digikamimageplugin_antivignetting.so
-%{tde_tdelibdir}/digikamimageplugin_blurfx.la
-%{tde_tdelibdir}/digikamimageplugin_blurfx.so
-%{tde_tdelibdir}/digikamimageplugin_border.la
-%{tde_tdelibdir}/digikamimageplugin_border.so
-%{tde_tdelibdir}/digikamimageplugin_channelmixer.la
-%{tde_tdelibdir}/digikamimageplugin_channelmixer.so
-%{tde_tdelibdir}/digikamimageplugin_charcoal.la
-%{tde_tdelibdir}/digikamimageplugin_charcoal.so
-%{tde_tdelibdir}/digikamimageplugin_colorfx.la
-%{tde_tdelibdir}/digikamimageplugin_colorfx.so
-%{tde_tdelibdir}/digikamimageplugin_core.la
-%{tde_tdelibdir}/digikamimageplugin_core.so
-%{tde_tdelibdir}/digikamimageplugin_distortionfx.la
-%{tde_tdelibdir}/digikamimageplugin_distortionfx.so
-%{tde_tdelibdir}/digikamimageplugin_emboss.la
-%{tde_tdelibdir}/digikamimageplugin_emboss.so
-%{tde_tdelibdir}/digikamimageplugin_filmgrain.la
-%{tde_tdelibdir}/digikamimageplugin_filmgrain.so
-%{tde_tdelibdir}/digikamimageplugin_freerotation.la
-%{tde_tdelibdir}/digikamimageplugin_freerotation.so
-%{tde_tdelibdir}/digikamimageplugin_hotpixels.la
-%{tde_tdelibdir}/digikamimageplugin_hotpixels.so
-%{tde_tdelibdir}/digikamimageplugin_infrared.la
-%{tde_tdelibdir}/digikamimageplugin_infrared.so
-%{tde_tdelibdir}/digikamimageplugin_inpainting.la
-%{tde_tdelibdir}/digikamimageplugin_inpainting.so
-%{tde_tdelibdir}/digikamimageplugin_inserttext.la
-%{tde_tdelibdir}/digikamimageplugin_inserttext.so
-%{tde_tdelibdir}/digikamimageplugin_lensdistortion.la
-%{tde_tdelibdir}/digikamimageplugin_lensdistortion.so
-%{tde_tdelibdir}/digikamimageplugin_noisereduction.la
-%{tde_tdelibdir}/digikamimageplugin_noisereduction.so
-%{tde_tdelibdir}/digikamimageplugin_oilpaint.la
-%{tde_tdelibdir}/digikamimageplugin_oilpaint.so
-%{tde_tdelibdir}/digikamimageplugin_perspective.la
-%{tde_tdelibdir}/digikamimageplugin_perspective.so
-%{tde_tdelibdir}/digikamimageplugin_raindrop.la
-%{tde_tdelibdir}/digikamimageplugin_raindrop.so
-%{tde_tdelibdir}/digikamimageplugin_restoration.la
-%{tde_tdelibdir}/digikamimageplugin_restoration.so
-%{tde_tdelibdir}/digikamimageplugin_sheartool.la
-%{tde_tdelibdir}/digikamimageplugin_sheartool.so
-%{tde_tdelibdir}/digikamimageplugin_superimpose.la
-%{tde_tdelibdir}/digikamimageplugin_superimpose.so
-%{tde_tdelibdir}/digikamimageplugin_texture.la
-%{tde_tdelibdir}/digikamimageplugin_texture.so
-%{tde_tdelibdir}/digikamimageplugin_whitebalance.la
-%{tde_tdelibdir}/digikamimageplugin_whitebalance.so
-%{tde_tdelibdir}/tdeio_digikamsearch.la
-%{tde_tdelibdir}/tdeio_digikamsearch.so
-%{tde_tdelibdir}/tdeio_digikamtags.la
-%{tde_tdelibdir}/tdeio_digikamtags.so
-%{tde_tdelibdir}/tdeio_digikamthumbnail.la
-%{tde_tdelibdir}/tdeio_digikamthumbnail.so
-%{tde_tdeappdir}/digikam.desktop
-%{tde_tdeappdir}/showfoto.desktop
-%{tde_datadir}/apps/digikam/
-%{tde_datadir}/apps/konqueror/servicemenus/digikam-download.desktop
-%{tde_datadir}/apps/konqueror/servicemenus/digikam-gphoto2-camera.desktop
-%{tde_datadir}/apps/konqueror/servicemenus/digikam-mount-and-download.desktop
-%{tde_datadir}/apps/konqueror/servicemenus/digikam-open_in_digikam.desktop
-%{tde_datadir}/apps/showfoto/
-%{tde_datadir}/icons/hicolor/*/apps/digikam.png
-%{tde_datadir}/icons/hicolor/*/apps/showfoto.png
-%{tde_datadir}/services/digikamalbums.protocol
-%{tde_datadir}/services/digikamdates.protocol
-%{tde_datadir}/services/digikamimageplugin_adjustcurves.desktop
-%{tde_datadir}/services/digikamimageplugin_adjustlevels.desktop
-%{tde_datadir}/services/digikamimageplugin_antivignetting.desktop
-%{tde_datadir}/services/digikamimageplugin_blurfx.desktop
-%{tde_datadir}/services/digikamimageplugin_border.desktop
-%{tde_datadir}/services/digikamimageplugin_channelmixer.desktop
-%{tde_datadir}/services/digikamimageplugin_charcoal.desktop
-%{tde_datadir}/services/digikamimageplugin_colorfx.desktop
-%{tde_datadir}/services/digikamimageplugin_core.desktop
-%{tde_datadir}/services/digikamimageplugin_distortionfx.desktop
-%{tde_datadir}/services/digikamimageplugin_emboss.desktop
-%{tde_datadir}/services/digikamimageplugin_filmgrain.desktop
-%{tde_datadir}/services/digikamimageplugin_freerotation.desktop
-%{tde_datadir}/services/digikamimageplugin_hotpixels.desktop
-%{tde_datadir}/services/digikamimageplugin_infrared.desktop
-%{tde_datadir}/services/digikamimageplugin_inpainting.desktop
-%{tde_datadir}/services/digikamimageplugin_inserttext.desktop
-%{tde_datadir}/services/digikamimageplugin_lensdistortion.desktop
-%{tde_datadir}/services/digikamimageplugin_noisereduction.desktop
-%{tde_datadir}/services/digikamimageplugin_oilpaint.desktop
-%{tde_datadir}/services/digikamimageplugin_perspective.desktop
-%{tde_datadir}/services/digikamimageplugin_raindrop.desktop
-%{tde_datadir}/services/digikamimageplugin_restoration.desktop
-%{tde_datadir}/services/digikamimageplugin_sheartool.desktop
-%{tde_datadir}/services/digikamimageplugin_superimpose.desktop
-%{tde_datadir}/services/digikamimageplugin_texture.desktop
-%{tde_datadir}/services/digikamimageplugin_whitebalance.desktop
-%{tde_datadir}/services/digikamsearch.protocol
-%{tde_datadir}/services/digikamtags.protocol
-%{tde_datadir}/services/digikamthumbnail.protocol
-%{tde_datadir}/servicetypes/digikamimageplugin.desktop
-%{tde_mandir}/man*/*
-%{tde_tdedocdir}/HTML/en/digikam/
-%{tde_tdedocdir}/HTML/en/showfoto/
+%{tde_prefix}/bin/digikam
+%{tde_prefix}/bin/digikamthemedesigner
+%{tde_prefix}/bin/digitaglinktree
+%{tde_prefix}/bin/showfoto
+%{tde_prefix}/%{_lib}/libdigikam.so.0
+%{tde_prefix}/%{_lib}/libdigikam.so.0.0.0
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamalbums.la
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamalbums.so
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamdates.la
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamdates.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_adjustcurves.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_adjustcurves.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_adjustlevels.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_adjustlevels.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_antivignetting.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_antivignetting.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_blurfx.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_blurfx.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_border.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_border.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_channelmixer.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_channelmixer.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_charcoal.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_charcoal.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_colorfx.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_colorfx.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_core.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_core.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_distortionfx.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_distortionfx.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_emboss.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_emboss.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_filmgrain.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_filmgrain.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_freerotation.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_freerotation.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_hotpixels.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_hotpixels.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_infrared.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_infrared.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_inpainting.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_inpainting.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_inserttext.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_inserttext.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_lensdistortion.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_lensdistortion.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_noisereduction.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_noisereduction.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_oilpaint.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_oilpaint.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_perspective.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_perspective.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_raindrop.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_raindrop.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_restoration.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_restoration.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_sheartool.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_sheartool.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_superimpose.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_superimpose.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_texture.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_texture.so
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_whitebalance.la
+%{tde_prefix}/%{_lib}/trinity/digikamimageplugin_whitebalance.so
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamsearch.la
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamsearch.so
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamtags.la
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamtags.so
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamthumbnail.la
+%{tde_prefix}/%{_lib}/trinity/tdeio_digikamthumbnail.so
+%{tde_prefix}/share/applications/tde/digikam.desktop
+%{tde_prefix}/share/applications/tde/showfoto.desktop
+%{tde_prefix}/share/apps/digikam/
+%{tde_prefix}/share/apps/konqueror/servicemenus/digikam-download.desktop
+%{tde_prefix}/share/apps/konqueror/servicemenus/digikam-gphoto2-camera.desktop
+%{tde_prefix}/share/apps/konqueror/servicemenus/digikam-mount-and-download.desktop
+%{tde_prefix}/share/apps/konqueror/servicemenus/digikam-open_in_digikam.desktop
+%{tde_prefix}/share/apps/showfoto/
+%{tde_prefix}/share/icons/hicolor/*/apps/digikam.png
+%{tde_prefix}/share/icons/hicolor/*/apps/showfoto.png
+%{tde_prefix}/share/services/digikamalbums.protocol
+%{tde_prefix}/share/services/digikamdates.protocol
+%{tde_prefix}/share/services/digikamimageplugin_adjustcurves.desktop
+%{tde_prefix}/share/services/digikamimageplugin_adjustlevels.desktop
+%{tde_prefix}/share/services/digikamimageplugin_antivignetting.desktop
+%{tde_prefix}/share/services/digikamimageplugin_blurfx.desktop
+%{tde_prefix}/share/services/digikamimageplugin_border.desktop
+%{tde_prefix}/share/services/digikamimageplugin_channelmixer.desktop
+%{tde_prefix}/share/services/digikamimageplugin_charcoal.desktop
+%{tde_prefix}/share/services/digikamimageplugin_colorfx.desktop
+%{tde_prefix}/share/services/digikamimageplugin_core.desktop
+%{tde_prefix}/share/services/digikamimageplugin_distortionfx.desktop
+%{tde_prefix}/share/services/digikamimageplugin_emboss.desktop
+%{tde_prefix}/share/services/digikamimageplugin_filmgrain.desktop
+%{tde_prefix}/share/services/digikamimageplugin_freerotation.desktop
+%{tde_prefix}/share/services/digikamimageplugin_hotpixels.desktop
+%{tde_prefix}/share/services/digikamimageplugin_infrared.desktop
+%{tde_prefix}/share/services/digikamimageplugin_inpainting.desktop
+%{tde_prefix}/share/services/digikamimageplugin_inserttext.desktop
+%{tde_prefix}/share/services/digikamimageplugin_lensdistortion.desktop
+%{tde_prefix}/share/services/digikamimageplugin_noisereduction.desktop
+%{tde_prefix}/share/services/digikamimageplugin_oilpaint.desktop
+%{tde_prefix}/share/services/digikamimageplugin_perspective.desktop
+%{tde_prefix}/share/services/digikamimageplugin_raindrop.desktop
+%{tde_prefix}/share/services/digikamimageplugin_restoration.desktop
+%{tde_prefix}/share/services/digikamimageplugin_sheartool.desktop
+%{tde_prefix}/share/services/digikamimageplugin_superimpose.desktop
+%{tde_prefix}/share/services/digikamimageplugin_texture.desktop
+%{tde_prefix}/share/services/digikamimageplugin_whitebalance.desktop
+%{tde_prefix}/share/services/digikamsearch.protocol
+%{tde_prefix}/share/services/digikamtags.protocol
+%{tde_prefix}/share/services/digikamthumbnail.protocol
+%{tde_prefix}/share/servicetypes/digikamimageplugin.desktop
+%{tde_prefix}/share/man/man*/*
+%{tde_prefix}/share/doc/tde/HTML/en/digikam/
+%{tde_prefix}/share/doc/tde/HTML/en/showfoto/
 
 ##########
 
@@ -254,10 +239,10 @@ Requires:		%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %files devel
 %defattr(-,root,root,-)
-%{tde_tdeincludedir}/digikam_export.h
-%{tde_tdeincludedir}/digikam/
-%{tde_libdir}/libdigikam.so
-%{tde_libdir}/libdigikam.la
+%{tde_prefix}/include/tde/digikam_export.h
+%{tde_prefix}/include/tde/digikam/
+%{tde_prefix}/%{_lib}/libdigikam.so
+%{tde_prefix}/%{_lib}/libdigikam.la
 
 ##########
 
@@ -271,39 +256,39 @@ Requires:		%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %files i18n
 %defattr(-,root,root,-)
-%lang(da) %{tde_tdedocdir}/HTML/da/digikam/
-%lang(da) %{tde_tdedocdir}/HTML/da/showfoto/
-%lang(de) %{tde_tdedocdir}/HTML/de/digikam/
-%lang(de) %{tde_tdedocdir}/HTML/de/showfoto/
-%lang(es) %{tde_tdedocdir}/HTML/es/digikam/
-# %lang(es) %{tde_tdedocdir}/HTML/es/showfoto/
-%lang(et) %{tde_tdedocdir}/HTML/et/digikam/
-%lang(et) %{tde_tdedocdir}/HTML/et/showfoto/
-%lang(it) %{tde_tdedocdir}/HTML/it/digikam/
-%lang(it) %{tde_tdedocdir}/HTML/it/showfoto/
-%lang(nl) %{tde_tdedocdir}/HTML/nl/digikam/
-%lang(nl) %{tde_tdedocdir}/HTML/nl/showfoto/
-%lang(pt_BR) %{tde_tdedocdir}/HTML/pt_BR/digikam/
-%lang(ru) %{tde_tdedocdir}/HTML/ru/digikam/
-%lang(sv) %{tde_tdedocdir}/HTML/sv/digikam/
-%lang(sv) %{tde_tdedocdir}/HTML/sv/showfoto/
+%lang(da) %{tde_prefix}/share/doc/tde/HTML/da/digikam/
+%lang(da) %{tde_prefix}/share/doc/tde/HTML/da/showfoto/
+%lang(de) %{tde_prefix}/share/doc/tde/HTML/de/digikam/
+%lang(de) %{tde_prefix}/share/doc/tde/HTML/de/showfoto/
+%lang(es) %{tde_prefix}/share/doc/tde/HTML/es/digikam/
+# %lang(es) %{tde_prefix}/share/doc/tde/HTML/es/showfoto/
+%lang(et) %{tde_prefix}/share/doc/tde/HTML/et/digikam/
+%lang(et) %{tde_prefix}/share/doc/tde/HTML/et/showfoto/
+%lang(it) %{tde_prefix}/share/doc/tde/HTML/it/digikam/
+%lang(it) %{tde_prefix}/share/doc/tde/HTML/it/showfoto/
+%lang(nl) %{tde_prefix}/share/doc/tde/HTML/nl/digikam/
+%lang(nl) %{tde_prefix}/share/doc/tde/HTML/nl/showfoto/
+%lang(pt_BR) %{tde_prefix}/share/doc/tde/HTML/pt_BR/digikam/
+%lang(ru) %{tde_prefix}/share/doc/tde/HTML/ru/digikam/
+%lang(sv) %{tde_prefix}/share/doc/tde/HTML/sv/digikam/
+%lang(sv) %{tde_prefix}/share/doc/tde/HTML/sv/showfoto/
 
 
 %conf -p
 unset QTDIR QTINC QTLIB
-export PATH="%{tde_bindir}:${PATH}"
-export PKG_CONFIG_PATH="%{tde_libdir}/pkgconfig"
+export PATH="%{tde_prefix}/bin:${PATH}"
+export PKG_CONFIG_PATH="%{tde_prefix}/%{_lib}/pkgconfig"
 
 
 %install -a
 %find_lang %{tde_pkg}
 
 # Hide 'showfoto'.
-echo "NoDisplay=true" >> "$RPM_BUILD_ROOT%{tde_tdeappdir}/showfoto.desktop"
+echo "NoDisplay=true" >> "$RPM_BUILD_ROOT%{tde_prefix}/share/applications/tde/showfoto.desktop"
 
 # Install the 'open in digikam' action for konqueror.
-install -D -m 644 "%{SOURCE1}" "$RPM_BUILD_ROOT%{tde_datadir}/apps/konqueror/servicemenus/digikam-open_in_digikam.desktop"
+install -D -m 644 "%{SOURCE1}" "$RPM_BUILD_ROOT%{tde_prefix}/share/apps/konqueror/servicemenus/digikam-open_in_digikam.desktop"
 
 # Remove unwanted pixmaps
-%__rm -rf %{?buildroot}%{tde_datadir}/pixmaps
+%__rm -rf %{?buildroot}%{tde_prefix}/share/pixmaps
 
