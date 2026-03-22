@@ -1,11 +1,9 @@
 %bcond clang 1
 
 # TDE variables
-%define tde_epoch 2
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 3
 
 %define tde_pkg digikam
 %define tde_prefix /opt/trinity
@@ -20,11 +18,9 @@
 
 %define tarball_name %{tde_pkg}-trinity
 
-
 Name:			trinity-%{tde_pkg}
-Epoch:			%{tde_epoch}
 Version:		0.9.6
-Release:		%{?tde_version}_%{?!preversion:%{pkg_rel}}%{?preversion:0_%{preversion}}%{?dist}
+Release:		%{?tde_version:%{tde_version}_}4
 Summary:		Digital photo management application for TDE
 Group:			Applications/Utilities
 URL:			http://www.trinitydesktop.org/
@@ -32,7 +28,7 @@ URL:			http://www.trinitydesktop.org/
 License:	GPLv2+
 
 
-Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/applications/graphics/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
+Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/applications/graphics/%{tarball_name}-%{tde_version}.tar.xz
 Source1:		digikam-open_in_digikam.desktop
 
 BuildSystem:    cmake
@@ -49,9 +45,9 @@ BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
 BuildRequires:	trinity-tdebase-devel >= %{tde_version}
 BuildRequires:	desktop-file-utils
 
-BuildRequires:	trinity-libkexiv2-devel
-BuildRequires:	trinity-libkdcraw-devel
-BuildRequires:	trinity-libkipi-devel
+BuildRequires:	trinity-%{_lib}kexiv2-devel
+BuildRequires:	trinity-%{_lib}kdcraw-devel
+BuildRequires:	trinity-%{_lib}kipi-devel
 
 # BuildRequires:	autoconf automake libtool m4
 
@@ -82,10 +78,6 @@ BuildRequires:  pkgconfig(sqlite3)
 
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(x11)
-
-Requires:		trinity-libkexiv2
-Requires:		trinity-libkipi
-Requires:		trinity-libkdcraw
 
 %description
 An easy to use and powerful digital photo management
@@ -232,7 +224,7 @@ digiKam is based in part on the work of the Independent JPEG Group.
 %package devel
 Group:			Development/Libraries
 Summary:		Development files for %{name}
-Requires:		%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:		%{name} = %{EVRD}
 
 %description devel
 %{summary}
@@ -249,7 +241,7 @@ Requires:		%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 %package i18n
 Summary:		Translation files for %{tde_pkg}
 Group:			Applications/Utilities
-Requires:		%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:		%{name} = %{EVRD}
 
 %description i18n
 %{summary}
